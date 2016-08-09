@@ -15,38 +15,65 @@
 //= require turbolinks
 //= require_tree .
 
-// var homePage = document.getElementById('home');
-// var loginPage = document.getElementById('login-page');
-// var cartPage = document.getElementById('cart-page');
-// var navLinks = document.querySelectorAll('.nav-link');
-//
-// var currentPage = homePage;
+$(document).ready(function() {
+
+var homePage = $('#home-page');
+var loginPage = $('#login-page');
+var cartPage = $('#cart-page');
+var navLinks = $('.nav-link');
+
+homePage.css('display', 'block');
+var currentPage = homePage;
 
 // *********** Navigation ***********
-// var navigate = function(pageFrom, pageTo) {
-//   pageFrom.style.display = 'none';
-//   currentPage = pageTo;
-//   currentPage.style.display = 'block';
-// };
+var navigate = function(pageFrom, pageTo) {
+  pageFrom.css('display', 'none');
+  currentPage = pageTo;
+  currentPage.css('display', 'block');
+};
 
 // Nav links
-// for (i = 0; i < navLinks.length; i++) {
-//   navLinks[i].addEventListener( 'click', function() {
-//     switch (this.id) {
-//       case 'home-btn':
-//         navigate(currentPage, homePage);
-//         break;
-//
-//       case 'login-btn':
-//         navigate(currentPage, loginPage);
-//         break;
-//
-//       case 'cart-btn':
-//         navigate(currentPage, cartPage);
-//         break;
-//
-//       default:
-//         console.log('404');
-//     }
-//   });
-// }
+for (i = 0; i < navLinks.length; i++) {
+  navLinks.on( 'click', function() {
+    switch (this.id) {
+      case 'home-btn':
+        navigate(currentPage, homePage);
+        break;
+
+      case 'login-btn':
+        navigate(currentPage, loginPage);
+        break;
+
+      case 'cart-btn':
+        navigate(currentPage, cartPage);
+        break;
+
+      default:
+        console.log('404');
+    }
+  });
+}
+
+// AJAX
+$('#login-submit').click(function(event){
+  var data = {
+              username:$("#username").val(),
+              password:$("#password").val()
+  };
+  console.log(data);
+    $.ajax({
+        url: 'http://localhost:3002/admins',
+        type: 'POST',
+        dataType: 'json',
+        data:data,
+        error: function() {
+            console.log("error");
+        },
+        success:function(data){
+            console.log("success");
+            var responseData = jQuery.parseJSON(data);
+        }
+    });
+    event.preventDefault();
+});
+});

@@ -14,6 +14,37 @@ body {
   color: $logo;
   text-transform: uppercase;
   text-align: center;
+  font-size: 48px;
+}
+
+.navbar-default {
+  background-color: #000;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #d0d0d0;
+}
+
+.navbar-default .navbar-nav>li>a:focus {
+  color: #d0d0d0;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+  color: #a0a0a0;
+}
+
+li a {
+  font-size: 16px;
+}
+
+a#home-btn {
+  font-size: 24px;
+  color: #d0d0d0;
 }
 
 .page {
@@ -21,14 +52,53 @@ body {
   display: none;
 }
 
-#home {
-  
+
+#home-page {
+
 }
 
 #login-page {
-
+  text-align: center;
 }
 
 #cart-page {
+  text-align: center;
+}
 
+.login-form {
+  margin-left: 800px;
+  margin-right: 800px;
+  text-align: center;
+}
+
+input {
+  text-align: center;
+}
+
+.shirt-img {
+  width: 75%;
+  display: block;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+
+.shirt-desc {
+  text-align: center;
+}
+
+h5.add-cart {
+  text-align: center;
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+}
+
+a:focus {
+  color: #337ab7;
+}
+
+.sign-up {
+  margin-top: 20px;
 }
