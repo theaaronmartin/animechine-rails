@@ -22,6 +22,12 @@ var loginPage = $('#login-page');
 var cartPage = $('#cart-page');
 var signupPage = $('#signup-page');
 var navLinks = $('.nav-link');
+var addBtn1 = $('#add-btn-1');
+var addBtn2 = $('#add-btn-2');
+var addBtn3 = $('#add-btn-3');
+var addBtn4 = $('#add-btn-4');
+var cartDisplay = $('#cart-display');
+var products = [];
 
 homePage.css('display', 'block');
 var currentPage = homePage;
@@ -100,4 +106,131 @@ $('#signup-submit').click(function(event){
     });
     event.preventDefault();
 });
+
+$('#add-btn-1').click(function(event){
+$.ajax({
+  url: 'http://localhost:3002/products/57a8cf7c45ad2e6714ee705e',
+  type: 'GET',
+  dataType: 'json',
+  contentType: 'application/json',
+  error: function() {
+      console.log("error");
+  },
+  success:function(data){
+      console.log("success");
+      console.log(data);
+  }
+});
+});
+
+$('#add-btn-2').click(function(event){
+$.ajax({
+  url: 'http://localhost:3002/products/57aa3abbc542023a06829ccd',
+  type: 'GET',
+  dataType: 'json',
+  contentType: 'application/json',
+  error: function() {
+      console.log("error");
+  },
+  success:function(data){
+      console.log("success");
+      console.log(data);
+  }
+});
+});
+
+$('#add-btn-3').click(function(event){
+$.ajax({
+  url: 'http://localhost:3002/products/57aa3ad6c542023a06829cce',
+  type: 'GET',
+  dataType: 'json',
+  contentType: 'application/json',
+  error: function() {
+      console.log("error");
+  },
+  success:function(data){
+      console.log("success");
+      console.log(data);
+  }
+});
+});
+
+$('#add-btn-4').click(function(event){
+$.ajax({
+  url: 'http://localhost:3002/products/57aa3aebc542023a06829ccf',
+  type: 'GET',
+  dataType: 'json',
+  contentType: 'application/json',
+  error: function() {
+      console.log("error");
+  },
+  success:function(data){
+      console.log("success");
+      console.log(data);
+  }
+ });
+});
+
+// Add to Cart
+addBtn1.on( 'click', function() {
+  product = new Product();
+
+  console.log('------ Product Added! ------');
+  products.push(new Product(product));
+
+  navigate(currentPage, cartPage);
+});
+
+addBtn2.on( 'click', function() {
+  product = new Product();
+
+  console.log('------ Product Added! ------');
+
+  navigate(currentPage, cartPage);
+});
+
+addBtn3.on( 'click', function() {
+  product = new Product();
+
+  console.log('------ Product Added! ------');
+
+  navigate(currentPage, cartPage);
+});
+
+addBtn4.on( 'click', function() {
+  product = new Product();
+
+  console.log('------ Product Added! ------');
+
+  navigate(currentPage, cartPage);
+});
+
+// Cart Display
+var showCart = function() {
+
+  cartDisplay.html('');
+
+
+    cartDisplay.append(product);
+};
+
+
+// Product
+// var Product = function(product) {
+//   this.productName = product.productName;
+//    this.size = product.size;
+//    this.color = product.color;
+//    this.price = product.price;
+//    this._id = product._id;
+// };
+
+function Product(productName, size, color, price, _id) {
+ this.productName = productName;
+ this.size = size;
+ this.color = color;
+ this.price = price;
+ this._id = _id;
+}
+
+
 });
