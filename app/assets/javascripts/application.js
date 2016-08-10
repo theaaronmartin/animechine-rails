@@ -119,7 +119,28 @@ $.ajax({
   success:function(data){
       console.log("success");
       console.log(data);
-  }
+      $.ajax({
+        url: 'http://localhost:3002/carts',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+        product:$("#productName").val()
+      }),
+        error: function() {
+          console.log("You fucked up!");
+        },
+        success:function(data){
+          console.log("success");
+          console.log(data);
+        },
+      });
+      $.each(products, function (index, product){
+        var productDisplay = $('<p></p>');
+        productDisplay.html(product.productName);
+        cartDisplay.append(product);
+    });
+  },
 });
 });
 
@@ -173,46 +194,38 @@ $.ajax({
 
 // Add to Cart
 addBtn1.on( 'click', function() {
-  product = new Product();
-
   console.log('------ Product Added! ------');
-  products.push(new Product(product));
+  products.push(new Product());
 
   navigate(currentPage, cartPage);
 });
 
 addBtn2.on( 'click', function() {
-  product = new Product();
-
   console.log('------ Product Added! ------');
 
   navigate(currentPage, cartPage);
 });
 
 addBtn3.on( 'click', function() {
-  product = new Product();
-
   console.log('------ Product Added! ------');
 
   navigate(currentPage, cartPage);
 });
 
 addBtn4.on( 'click', function() {
-  product = new Product();
-
   console.log('------ Product Added! ------');
 
   navigate(currentPage, cartPage);
 });
 
 // Cart Display
-var showCart = function() {
-
-  cartDisplay.html('');
-
-
-    cartDisplay.append(product);
-};
+// var showCart = function() {
+  // $.each(products, function(product) {
+  //   var productDisplay = $('<p></p>');
+  //   productDisplay.html(product.productName);
+  //   cartDisplay.append(product);
+  // });
+// };
 
 
 // Product
