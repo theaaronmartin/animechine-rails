@@ -20,6 +20,7 @@ $(document).ready(function() {
 var homePage = $('#home-page');
 var loginPage = $('#login-page');
 var cartPage = $('#cart-page');
+var signupPage = $('#signup-page');
 var navLinks = $('.nav-link');
 
 homePage.css('display', 'block');
@@ -48,6 +49,10 @@ for (i = 0; i < navLinks.length; i++) {
         navigate(currentPage, cartPage);
         break;
 
+      case 'signup-btn':
+        navigate(currentPage, signupPage);
+        break;
+
       default:
         console.log('404');
     }
@@ -56,22 +61,41 @@ for (i = 0; i < navLinks.length; i++) {
 
 // AJAX
 $('#login-submit').click(function(event){
-  var data = {
-              username:$("#username").val(),
-              password:$("#password").val()
-  };
-  console.log(data);
     $.ajax({
         url: 'http://localhost:3002/admins',
-        type: 'POST',
+        type: 'GET',
         dataType: 'json',
-        data:data,
+        data: JSON.stringify({
+        username: $('#username').val(),
+        password:$("#password").val()
+      }),
         error: function() {
             console.log("error");
         },
         success:function(data){
             console.log("success");
-            var responseData = jQuery.parseJSON(data);
+            // var responseData = jQuery.parseJSON(data);
+        }
+    });
+    event.preventDefault();
+});
+
+$('#signup-submit').click(function(event){
+    $.ajax({
+        url: 'http://localhost:3002/admins',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+        username: $('#username-signup').val(),
+        password:$("#password-signup").val()
+      }),
+        error: function() {
+            console.log("error");
+        },
+        success:function(data){
+            console.log("success");
+            // var responseData = jQuery.parseJSON(data);
         }
     });
     event.preventDefault();
