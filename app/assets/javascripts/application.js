@@ -22,11 +22,9 @@ var loginPage = $('#login-page');
 var cartPage = $('#cart-page');
 var signupPage = $('#signup-page');
 var navLinks = $('.nav-link');
-var addBtn1 = $('#add-btn-1');
-var addBtn2 = $('#add-btn-2');
-var addBtn3 = $('#add-btn-3');
-var addBtn4 = $('#add-btn-4');
+var addBtn = $('#add-btn');
 var cartDisplay = $('#cart-display');
+var showProducts = $('#show-products');
 var products = [];
 
 homePage.css('display', 'block');
@@ -66,6 +64,8 @@ for (i = 0; i < navLinks.length; i++) {
 }
 
 // AJAX
+
+// Login Submit
 $('#login-submit').click(function(event){
     $.ajax({
         url: 'http://localhost:3002/admins',
@@ -86,6 +86,7 @@ $('#login-submit').click(function(event){
     event.preventDefault();
 });
 
+// Signup Submit
 $('#signup-submit').click(function(event){
     $.ajax({
         url: 'http://localhost:3002/admins',
@@ -107,115 +108,64 @@ $('#signup-submit').click(function(event){
     event.preventDefault();
 });
 
-$('#add-btn-1').click(function(event){
-$.ajax({
-  url: 'http://localhost:3002/products/57a8cf7c45ad2e6714ee705e',
-  type: 'GET',
-  dataType: 'json',
-  contentType: 'application/json',
-  error: function() {
-      console.log("error");
-  },
-  success:function(data){
-      console.log("success");
-      console.log(data);
-      $.ajax({
-        url: 'http://localhost:3002/carts',
-        type: 'POST',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({
-        product:$("#productName").val()
-      }),
-        error: function() {
-          console.log("You fucked up!");
-        },
-        success:function(data){
-          console.log("success");
-          console.log(data);
-        },
+// Show Products
+
+$.ajax('http://localhost:3002/products/', {
+  method: 'GET'
+  })
+  .done(function(products) {
+    console.log(products);
+      $.each(products, function(index, product) {
+        var item = $('<div class="col-md-6"><img class="shirt-img"/><h3 class="shirt-desc"></h3<h5 class="shirt-desc"></h5><h5 class="add-cart" ><a id="add-btn" href="javascript://"></a></h5></div>');
+        item.find('img.shirt-img').attr('src', product.image);
+        item.find('h3.shirt-desc').html(product.productName);
+        item.find('h5.shirt-desc').html(product.size);
+        item.find('a#add-btn').html('Add to Cart');
+        showProducts.append(item);
       });
-      $.each(products, function (index, product){
-        var productDisplay = $('<p></p>');
-        productDisplay.html(product.productName);
-        cartDisplay.append(product);
+    })
+    .fail(function() {
+      console.log('error');
+    })
+    .always(function() {
+      console.log('complete');
     });
-  },
-});
-});
 
-$('#add-btn-2').click(function(event){
-$.ajax({
-  url: 'http://localhost:3002/products/57aa3abbc542023a06829ccd',
-  type: 'GET',
-  dataType: 'json',
-  contentType: 'application/json',
-  error: function() {
-      console.log("error");
-  },
-  success:function(data){
-      console.log("success");
-      console.log(data);
-  }
-});
-});
 
-$('#add-btn-3').click(function(event){
-$.ajax({
-  url: 'http://localhost:3002/products/57aa3ad6c542023a06829cce',
-  type: 'GET',
-  dataType: 'json',
-  contentType: 'application/json',
-  error: function() {
-      console.log("error");
-  },
-  success:function(data){
-      console.log("success");
-      console.log(data);
-  }
-});
-});
-
-$('#add-btn-4').click(function(event){
-$.ajax({
-  url: 'http://localhost:3002/products/57aa3aebc542023a06829ccf',
-  type: 'GET',
-  dataType: 'json',
-  contentType: 'application/json',
-  error: function() {
-      console.log("error");
-  },
-  success:function(data){
-      console.log("success");
-      console.log(data);
-  }
- });
-});
 
 // Add to Cart
-addBtn1.on( 'click', function() {
-  console.log('------ Product Added! ------');
-  products.push(new Product());
+addBtn.on( 'click', function() {
+  // $.ajax({
+  //   url: 'http://localhost:3002/carts',
+  //   type: 'POST',
+  //   dataType: 'json',
+  //   contentType: 'application/json',
+  //   data: JSON.stringify({
+  //   product:$("#productName").val()
+  // }),
+  //   error: function() {
+  //     console.log("You fucked up!");
+  //   },
+  //   success:function(data){
+  //     console.log("success");
+  //     console.log(data);
+  //   },
+  // });
+  console.log('added')
 
-  navigate(currentPage, cartPage);
-});
-
-addBtn2.on( 'click', function() {
-  console.log('------ Product Added! ------');
-
-  navigate(currentPage, cartPage);
-});
-
-addBtn3.on( 'click', function() {
-  console.log('------ Product Added! ------');
-
-  navigate(currentPage, cartPage);
-});
-
-addBtn4.on( 'click', function() {
-  console.log('------ Product Added! ------');
-
-  navigate(currentPage, cartPage);
+  $.ajax('http://localhost:3002/carts/', {
+    method: 'POST'
+    })
+    .done(function(products) {
+      console.log(products);
+      })
+      .fail(function() {
+        console.log('error');
+      })
+      .always(function() {
+        console.log('complete');
+      });
+      navigate(currentPage, cartPage);
 });
 
 // Cart Display
@@ -229,14 +179,6 @@ addBtn4.on( 'click', function() {
 
 
 // Product
-// var Product = function(product) {
-//   this.productName = product.productName;
-//    this.size = product.size;
-//    this.color = product.color;
-//    this.price = product.price;
-//    this._id = product._id;
-// };
-
 function Product(productName, size, color, price, _id) {
  this.productName = productName;
  this.size = size;
