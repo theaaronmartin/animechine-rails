@@ -22,7 +22,7 @@ var loginPage = $('#login-page');
 var cartPage = $('#cart-page');
 var signupPage = $('#signup-page');
 var navLinks = $('.nav-link');
-var addBtn = $('#add-btn');
+var addBtn = $('.add-btn');
 var cartDisplay = $('#cart-display');
 var showProducts = $('#show-products');
 var products = [];
@@ -116,11 +116,12 @@ $.ajax('http://localhost:3002/products/', {
   .done(function(products) {
     console.log(products);
       $.each(products, function(index, product) {
-        var item = $('<div class="col-md-6"><img class="shirt-img"/><h3 class="shirt-desc"></h3<h5 class="shirt-desc"></h5><h5 class="add-cart" ><a id="add-btn" href="javascript://"></a></h5></div>');
+        var item = $('<div class="col-md-6"><img class="shirt-img"/><h3 class="shirt-desc"></h3><h5 class="shirt-desc"></h5><h5 class="shirt-price"></h5><h5 class="add-cart" ><a class="add-btn" href="javascript://"></a></h5></div>');
         item.find('img.shirt-img').attr('src', product.image);
         item.find('h3.shirt-desc').html(product.productName);
         item.find('h5.shirt-desc').html(product.size);
-        item.find('a#add-btn').html('Add to Cart');
+        item.find('h5.shirt-price').html(product.price);
+        item.find('a.add-btn').html('Add to Cart');
         showProducts.append(item);
       });
     })
@@ -131,42 +132,42 @@ $.ajax('http://localhost:3002/products/', {
       console.log('complete');
     });
 
-
-
-// Add to Cart
-addBtn.on( 'click', function() {
-  // $.ajax({
-  //   url: 'http://localhost:3002/carts',
-  //   type: 'POST',
-  //   dataType: 'json',
-  //   contentType: 'application/json',
-  //   data: JSON.stringify({
-  //   product:$("#productName").val()
-  // }),
-  //   error: function() {
-  //     console.log("You fucked up!");
-  //   },
-  //   success:function(data){
-  //     console.log("success");
-  //     console.log(data);
-  //   },
-  // });
-  console.log('added')
-
-  $.ajax('http://localhost:3002/carts/', {
-    method: 'POST'
-    })
-    .done(function(products) {
-      console.log(products);
-      })
-      .fail(function() {
-        console.log('error');
-      })
-      .always(function() {
-        console.log('complete');
+    // Add to Cart
+    showProducts.on( 'click', '.add-btn', function() {
+      $.ajax({
+        url: 'http://localhost:3002/carts',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+        productId:$(_id).val(),
+        userId:$(user_id).val()
+      }),
+        error: function() {
+          console.log("You fucked up!");
+        },
+        success:function(data){
+          console.log("success");
+          console.log(data);
+        },
       });
+      console.log('added');
+
+      // $.ajax('http://localhost:3002/carts/', {
+      //   method: 'POST'
+      //   })
+      //   .done(function(products) {
+      //     console.log(products);
+      //     })
+      //     .fail(function() {
+      //       console.log('error');
+      //     })
+      //     .always(function() {
+      //       console.log('complete');
+      //     });
       navigate(currentPage, cartPage);
-});
+    });
+
 
 // Cart Display
 // var showCart = function() {
