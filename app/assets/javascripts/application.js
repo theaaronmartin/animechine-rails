@@ -134,23 +134,23 @@ $.ajax('http://localhost:3002/products/', {
 
     // Add to Cart
     showProducts.on( 'click', '.add-btn', function() {
-      $.ajax({
-        url: 'http://localhost:3002/carts',
-        type: 'POST',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({
-        productId:$(_id).val(),
-        userId:$(user_id).val()
-      }),
-        error: function() {
-          console.log("You fucked up!");
-        },
-        success:function(data){
-          console.log("success");
-          console.log(data);
-        },
-      });
+      // $.ajax({
+      //   url: 'http://localhost:3002/carts',
+      //   type: 'POST',
+      //   dataType: 'json',
+      //   contentType: 'application/json',
+      //   data: JSON.stringify({
+      //   productId:$(product_id).val(),
+      //   userId:$(user_id).val()
+      // }),
+      //   error: function() {
+      //     console.log("You fucked up!");
+      //   },
+      //   success:function(data){
+      //     console.log("success");
+      //     console.log(data);
+      //   },
+      // });
       console.log('added');
 
       // $.ajax('http://localhost:3002/carts/', {
